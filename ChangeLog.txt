@@ -1,0 +1,5 @@
+[07-Jun-2013]
+* [TA] Configured DataSourceRealm using Metafour DTDBMS
+
+[06-Jun-2013]
+* [TA] Tomcat container-managed security with Single-Sign-On and Spring Security integration
