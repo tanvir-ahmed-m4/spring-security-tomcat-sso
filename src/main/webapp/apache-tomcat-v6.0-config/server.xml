@@ -37,6 +37,29 @@
          UserDatabaseRealm to authenticate users
     -->
     <Resource auth="Container" description="User database that can be updated and saved" factory="org.apache.catalina.users.MemoryUserDatabaseFactory" name="UserDatabase" pathname="conf/tomcat-users.xml" type="org.apache.catalina.UserDatabase"/>
+
+	<!--
+	insert into users values('tanvir', 't');
+	insert into users values('shumi', 's');
+	insert into user_roles values('tanvir', 'teller');
+	insert into user_roles values('tanvir', 'user');
+	insert into user_roles values('shumi', 'teller');
+	insert into user_roles values('shumi', 'user');
+	insert into user_roles values('shumi', 'supervisor'); 
+	-->
+   	<Resource name="jdbc/pgauthority" auth="Container"
+          type="javax.sql.DataSource"
+          driverClassName="org.postgresql.Driver" 
+          url="jdbc:postgresql://localhost:5432/authority?user=tanvir"
+          password="password"
+          maxActive="8" maxIdle="4"/>
+
+	<Resource name="jdbc/mfauthority" auth="Container"
+          type="javax.sql.DataSource"
+          driverClassName="com.metafour.jdbc.MfDriver"
+          url="jdbc:metafour://localhost:9876/edemo"
+          maxActive="8" maxIdle="4"/>
+    
   </GlobalNamingResources>
 
   <!-- A "Service" is a collection of one or more "Connectors" that share
@@ -107,12 +130,26 @@
       <Valve className="org.apache.catalina.valves.RequestDumperValve"/>
       -->
 
-      <!-- This Realm uses the UserDatabase configured in the global JNDI
-           resources under the key "UserDatabase".  Any edits
-           that are performed against this UserDatabase are immediately
-           available for use by the Realm.  -->
-      <Realm className="org.apache.catalina.realm.UserDatabaseRealm" resourceName="UserDatabase"/>
+      <Realm className="org.apache.catalina.realm.CombinedRealm" >
+      
+	      <!-- This Realm uses the UserDatabase configured in the global JNDI
+	           resources under the key "UserDatabase".  Any edits
+	           that are performed against this UserDatabase are immediately
+	           available for use by the Realm.  -->
+	      <Realm className="org.apache.catalina.realm.UserDatabaseRealm" resourceName="UserDatabase"/>
+	
+	      <Realm className="org.apache.catalina.realm.DataSourceRealm"
+			   dataSourceName="jdbc/pgauthority"
+			   userTable="users" userNameCol="user_name" userCredCol="user_pass"
+			   userRoleTable="user_roles" roleNameCol="role_name"/>
+		   
+	      <Realm className="org.apache.catalina.realm.DataSourceRealm"
+			   dataSourceName="jdbc/mfauthority"
+			   userTable="US" userNameCol="USCD" userCredCol="PSWD"
+			   userRoleTable="US" roleNameCol="PRIV"/>
 
+		</Realm>
+		   
       <!-- Define the default virtual host
            Note: XML Schema validation will not work with Xerces 2.2.
        -->

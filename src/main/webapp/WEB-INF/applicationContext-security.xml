@@ -18,7 +18,7 @@
     <http pattern="/static/**" security="none"/>
     <http pattern="/loggedout.jsp" security="none"/>
 
-    <http auto-config="true" use-expressions="true">
+    <http auto-config="true" use-expressions="true" create-session="never">
         <intercept-url pattern="/secure/extreme/**" access="hasRole('supervisor')"/>
         <intercept-url pattern="/secure/**" access="isAuthenticated()" />
         <!--
@@ -27,13 +27,13 @@
           -->
         <intercept-url pattern="/**" access="permitAll" />
         <form-login />
-        <logout logout-success-url="/loggedout.jsp" delete-cookies="JSESSIONID,JSESSIONIDSSO"/>
+        <logout logout-success-url="/loggedout.jsp" invalidate-session="true" delete-cookies="JSESSIONID,JSESSIONIDSSO"/>
         <remember-me />
         
         <custom-filter after="PRE_AUTH_FILTER" ref="jeePreAuthenticatedFilter"/>
 
         <!-- Uncomment to limit the number of sessions a user can have -->
-        <session-management invalid-session-url="/timeout.jsp">
+        <session-management invalid-session-url="/timeout.jsp" session-fixation-protection="newSession">
             <concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
         </session-management>
 
