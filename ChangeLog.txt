@@ -1,3 +1,6 @@
+[07-Aug-2013]
+* [TA] LoginFilter added, trying to detect login/logout events
+
 [07-Jun-2013]
 * [TA] Configured DataSourceRealm using Metafour DTDBMS
 
