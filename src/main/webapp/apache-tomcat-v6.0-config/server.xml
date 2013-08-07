@@ -39,13 +39,31 @@
     <Resource auth="Container" description="User database that can be updated and saved" factory="org.apache.catalina.users.MemoryUserDatabaseFactory" name="UserDatabase" pathname="conf/tomcat-users.xml" type="org.apache.catalina.UserDatabase"/>
 
 	<!--
-	insert into users values('tanvir', 't');
-	insert into users values('shumi', 's');
-	insert into user_roles values('tanvir', 'teller');
-	insert into user_roles values('tanvir', 'user');
-	insert into user_roles values('shumi', 'teller');
-	insert into user_roles values('shumi', 'user');
-	insert into user_roles values('shumi', 'supervisor'); 
+	BEGIN;
+
+	CREATE TABLE users
+	(
+	   user_name character varying(25) NOT NULL, 
+	   user_pass character varying(25) NOT NULL, 
+	   PRIMARY KEY (user_name)
+	);
+	
+	CREATE TABLE user_roles
+	(
+	   user_name character varying(25) NOT NULL, 
+	   role_name character varying(25) NOT NULL, 
+	   FOREIGN KEY (user_name) REFERENCES users
+	);
+	
+	INSERT INTO users VALUES('tanvir', 't');
+	INSERT INTO users VALUES('shumi', 's');
+	INSERT INTO user_roles VALUES('tanvir', 'teller');
+	INSERT INTO user_roles VALUES('tanvir', 'user');
+	INSERT INTO user_roles VALUES('shumi', 'teller');
+	INSERT INTO user_roles VALUES('shumi', 'user');
+	INSERT INTO user_roles VALUES('shumi', 'supervisor'); 
+	
+	COMMIT;
 	-->
    	<Resource name="jdbc/pgauthority" auth="Container"
           type="javax.sql.DataSource"
