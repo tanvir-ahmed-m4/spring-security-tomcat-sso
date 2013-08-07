@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- - Tutorial web application - -->
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
 	<display-name>Spring Security Tutorial Application</display-name>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-            classpath:applicationContext-business.xml
-            /WEB-INF/applicationContext-security.xml
-        </param-value>
+			classpath:applicationContext-business.xml
+			/WEB-INF/applicationContext-security.xml
+		</param-value>
 	</context-param>
 	<context-param>
 		<param-name>webAppRootKey</param-name>
@@ -18,21 +18,25 @@
 	</context-param>
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy
+		</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+		<listener-class>org.springframework.web.context.ContextLoaderListener
+		</listener-class>
 	</listener>
 	<listener>
-		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher
+		</listener-class>
 	</listener>
 	<servlet>
 		<servlet-name>bank</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet
+		</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
@@ -59,7 +63,6 @@
 			<form-error-page>/login-failed.htm</form-error-page>
 		</form-login-config>
 	</login-config>
-	<!-- <security-role> <role-name>*</role-name> </security-role> -->
 	<security-role>
 		<role-name>supervisor</role-name>
 	</security-role>
@@ -81,4 +84,13 @@
 	<security-role>
 		<role-name>9</role-name>
 	</security-role>
+	<filter>
+		<display-name>LoginFilter</display-name>
+		<filter-name>LoginFilter</filter-name>
+		<filter-class>security.LoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>LoginFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 </web-app>
