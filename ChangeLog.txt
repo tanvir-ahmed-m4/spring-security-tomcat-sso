@@ -1,3 +1,7 @@
+[16-Aug-2013]
+* [TA] Access the Security Context and Tomcat's Single Sign On Cookie from Sprint Controller.
+* [TA] Release spring-security-tomcat-sso-0.0.3
+
 [14-Aug-2013]
 * [TA] LoginFilter removed.
 
