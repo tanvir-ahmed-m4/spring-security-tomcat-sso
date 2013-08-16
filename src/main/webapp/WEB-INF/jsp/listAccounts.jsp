@@ -46,7 +46,11 @@ Anyone can view this page, but posting to an Account requires login and must be 
   </tr>
 </c:forEach>
 </table>
-
+<p>
+The principal....: ${principal}
+<br/>
+Single Sign On Session ID: ${ssoID}
+</p>
 <p><a href="j_spring_security_logout">Logout</a></p>
 </div>
 </body>
