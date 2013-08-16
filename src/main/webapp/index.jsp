@@ -1,6 +1,7 @@
 <%@ page session="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.util.TreeMap" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -22,6 +23,15 @@ While anyone can also view the <a href="listAccounts.html">list accounts</a> pag
 </p>
 <p>
 Your principal object is....: <%= request.getUserPrincipal() %>
+</p>
+<p>
+<%
+TreeMap<String, String> cookies = new TreeMap<String, String>();
+for (Cookie c : request.getCookies()) {
+	cookies.put(c.getName(), c.getValue());
+}
+%>
+Your cookies....: <%= cookies %> 
 </p>
 <sec:authorize url='/secure/index.jsp'>
 <p>
